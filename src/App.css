@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+
+
+* {
+  margin: 0px;
+  outline: none;
+  padding: 0px;
+  text-decoration: none;
+}
+
+*, body{
+  font-family: 'Roboto', sans-serif;
+}
+
+.bg-warning{
+  background-color: #eb6825 !important;
+}
+
+.text-warning{
+ color: #eb6825 !important;
+}
+
+h1{
+  font-size: 50px !important;
+}
+
+h2{
+  font-size: 30px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  letter-spacing: 2px !important;
+  font-weight: 700 !important;
+}
+
+h3{
+  font-size: 20px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  letter-spacing: 1px !important;
+  font-weight: 700 !important;
+}
+
+h5{
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 700 !important;
+}
+
+h6{
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 700 !important;
+}
+
+a{
+  text-decoration: none;
+  color: #fff !important;
+  outline: none;
+  transition: all 0.3s ease-in-out !important;
+}
+
+a:hover{
+  text-decoration: none;
+  color: #fff !important;
+  outline: none;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+/* For Home.js */
+.home-cont1{
+  background: url('./assets/images/home-top-1.jpg') no-repeat center / cover;
+}
+
+.vh100{
+  height: 100vh !important;
+}
+
+.home-cont1-text{
+  padding-top: 150px !important;
+  padding-bottom: 150px !important;
+}
+
+#searchText {
+  border: none;
+  border-radius: 0;
+}
+
+.home-cont1 div h1{
+  letter-spacing: 6px;
+}
+
+.round-border{
+  border: 2px solid #eb6825;
+  border-radius: 100%;
+  height: 126px;
+  line-height: 116px;
+  display: inline-block;
+  width: 126px;
+}
+
+.res-shadow{
+  box-shadow: 0 0 7px rgba(173, 173, 173, 0.32);
+}
+
+.res-border{
+  border: 1px solid #f2f2f2
+}
+
+.rating{
+  color: #ffc107 !important;
+}
+
+/* For Navbar.js */
+.nav-link{
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff !important;
+}
+.nav-item .active{
+  font-size: 13px;
+  font-weight: 700;
+  color: #eb6825 !important;
+}
+
+.nav-item .btn{
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.btn-warning {
+  color: #fff;
+  background-color: #eb6825;
+  border-color: #eb6825;
+}
+
+.btn-warning:hover {
+  color: #eb6825;
+  background-color: #fff;
+  border-color: #eb6825;
+}
+
+.btn-warning:focus, .btn-warning.focus {
+  box-shadow: none;
+}
+
+.btn-warning:not(:disabled):not(.disabled):active, .btn-warning:not(:disabled):not(.disabled).active, .show > .btn-warning.dropdown-toggle {
+  color: #eb6825;
+  background-color: #fff;
+  border-color: #eb6825;
+}
+
+.btn-warning:not(:disabled):not(.disabled):active:focus, .btn-warning:not(:disabled):not(.disabled).active:focus, .show > .btn-warning.dropdown-toggle:focus {
+  box-shadow: none;
+}
+
+.home-cont3{
+  background: url('./assets/images/call-to-action-paralax.jpg') no-repeat center / cover;
+}
+
+/* For Footer.js */
+.bg-footer{
+  background-color: #282c35;
+}
+
+.footer-head-div{
+  border-bottom: 1px solid #404040;
+  margin-bottom: 30px;
+}
+
+.footer-list-div ul li{
+  list-style: none;
+  color: #cdcdcd;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.footer-list-div ul li a{
+  text-decoration: none;
+  color: #cdcdcd !important;
+  outline: none;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.footer-list-div ul li a:hover{
+  color: #eb6825 !important;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+.social-media {
+  margin: 0 0 10px;
+}
+
+.bg-light-gray{
+  background-color: #cdcdcd;
+}
+
+.social-media li {
+  display: inline-block;
+  padding: 0;
+  margin: 0 5px 10px 0;
+}
+
+.social-media li a:hover{
+  background-color: #eb6825 !important;
+  margin: 0 !important;
+  text-decoration: none;
+  fill: #fff;
+}
+
+.social-media li a .svg:hover{
+  fill: #fff !important;
+}
+
+.footer-copyright{
+  border-top: 1px solid #404040;
+  padding: 30px 0px 10px !important;
+  letter-spacing: 1px
+}
+
+.footer-copyright p{
+  color: #cdcdcd !important;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+/* For RegisterRestaurant */
+.register-cont1{
+  background: url('./assets/images/fb-subheader-4.jpg') no-repeat center / cover;
+}
+
+.register-cont1-text{
+  padding-top: 100px !important;
+  padding-bottom: 100px !important;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: #28a745;
+  background-color: #28a745;
+}
+
+
+/* For Restaurant.js */
+
+.input-group-text{
+  color: #999ba3;
+  background-color: #ffffff;  
+}
+
+.input-group .form-control{
+  color: #999ba3 !important;
+  border-left: none;
+}
+.form-control::placeholder{
+  color: #999ba3 !important;
+}
+
+.form-control:focus {
+  color: #999ba3;
+  background-color: #fff;
+  /* border-color: ; */
+  outline: 0;
+  box-shadow: none;
+}
+
+.listing-filter .filter-heading{
+  border-top: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.filter-list{
+  list-style: none;
+}
+.filter-list li{
+  padding-bottom: 17px;
+}
+
+.listing-filter ul li .custom-checkbox label {
+  color: #999ba3 !important;
+  cursor: pointer !important;
+  font-size: 13px;
+  line-height: 24px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.listing-filter ul li .custom-control-input:checked ~ .custom-control-label::before {
+  color: transparent;
+  border-color: #eb6825;
+  background-color: #eb6825;
+}
+
+.listing-filter ul li .custom-control-label::before{
+  background-color: transparent;
+  border: #999ba3 solid 1px;
+}
+
+
+@media (max-width: 600px){
+  h1{
+    font-size: 30px !important;
+  }
+  .home-cont1-text {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+  }
+}
