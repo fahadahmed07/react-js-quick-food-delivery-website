@@ -296,6 +296,26 @@ a:hover{
   border: #999ba3 solid 1px;
 }
 
+.sort-by ul{
+  list-style: none;
+}
+.sort-by h5{
+  font: 700 Normal 16px/22px "Montserrat", sans-serif !important;
+}
+
+.sort-by ul li{
+  font-size: 14px;
+  font-weight: 300 !important;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.sort-by ul li:hover{
+  color: #eb6825;
+}
+
+
 
 @media (max-width: 600px){
   h1{
