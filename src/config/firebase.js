@@ -39,27 +39,25 @@ function signUp(userDetails) {
                         userUid: uid,
                         userProfileImageUrl: userProfileImageUrl,
                     }
-                    db.collection("users").add(userDetailsForDb)
-                        .then(function (docRef) {
-                            console.log("Document written with ID: ", docRef.id);
-                            resolve(docRef.id)
-                        })
-                        .catch(function (error) {
-                            console.error("Error adding document: ", error);
-                            reject(error)
-                        })
+                    db.collection("users").doc(uid).set(userDetailsForDb).then((docRef) => {
+                        // console.log("Document written with ID: ", docRef.id);
+                        resolve(docRef.id)
+                    }).catch(function (error) {
+                        console.error("Error adding document: ", error);
+                        reject(error)
+                    })
                 }).catch((error) => {
                     // Handle Errors here.
                     let errorCode = error.code;
                     let errorMessage = error.message;
-                    console.log("Error in getDownloadURL function", errorMessage);                    
+                    console.log("Error in getDownloadURL function", errorMessage);
                     reject(errorMessage)
                 })
             }).catch((error) => {
                 // Handle Errors here.
                 let errorCode = error.code;
                 let errorMessage = error.message;
-                console.log("Error in Image Uploading", errorMessage);                    
+                console.log("Error in Image Uploading", errorMessage);
                 reject(errorMessage)
             })
         }).catch((error) => {

@@ -30,7 +30,7 @@ export default class Restaurants extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="container-fluid py-5 bg-light">
+                <div style={{background: "#EBEDF3"}} className="container-fluid py-5">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-2 col-md-2 col-sm-12">
@@ -84,7 +84,7 @@ export default class Restaurants extends Component {
                                 <h4 className="mb-3">18 Restaurant's Found</h4>
                                 <div className="container px-0">
                                     <div className="col-lg-12 col-md-12 col-sm-12 mb-4 px-0">
-                                        <div className="container bg-white res-shadow p-3 px-0 mb-4">
+                                        <div className="container bg-white p-3 px-0 mb-4">
                                             <div className="row">
                                                 <div className="col-lg-3 col-md-3 col-sm-12 px-0 text-center">
                                                     <img style={{width: "70%"}} alt="Natural Healthy Food" src={require("../assets/images/listing-logo03.png")} />
@@ -110,7 +110,7 @@ export default class Restaurants extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="container bg-white res-shadow p-3 px-0 mb-4">
+                                        <div className="container bg-white p-3 px-0 mb-4">
                                             <div className="row">
                                                 <div className="col-lg-3 col-md-3 col-sm-12 px-0 text-center">
                                                     <img style={{width: "70%"}} alt="Natural Healthy Food" src={require("../assets/images/listing-logo09.png")} />
@@ -136,7 +136,7 @@ export default class Restaurants extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="container bg-white res-shadow p-3 px-0 mb-4">
+                                        <div className="container bg-white p-3 px-0 mb-4">
                                             <div className="row">
                                                 <div className="col-lg-3 col-md-3 col-sm-12 px-0 text-center">
                                                     <img style={{width: "70%"}} alt="Natural Healthy Food" src={require("../assets/images/listing-logo12.png")} />
@@ -162,7 +162,7 @@ export default class Restaurants extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="container bg-white res-shadow p-3 px-0 mb-4">
+                                        <div className="container bg-white p-3 px-0 mb-4">
                                             <div className="row">
                                                 <div className="col-lg-3 col-md-3 col-sm-12 px-0 text-center">
                                                     <img style={{width: "70%"}} alt="Natural Healthy Food" src={require("../assets/images/listing-logo15.png")} />
@@ -188,7 +188,7 @@ export default class Restaurants extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="container bg-white res-shadow p-3 px-0 mb-4">
+                                        <div className="container bg-white p-3 px-0 mb-4">
                                             <div className="row">
                                                 <div className="col-lg-3 col-md-3 col-sm-12 px-0 text-center">
                                                     <img style={{width: "70%"}} alt="Natural Healthy Food" src={require("../assets/images/listing-logo13.png")} />
@@ -232,7 +232,7 @@ export default class Restaurants extends Component {
                                             <FontAwesomeIcon icon="star" className="mr-3"/>
                                             <span>Ratings</span>
                                         </li>
-                                        <li>
+                                        {/* <li>
                                             <FontAwesomeIcon icon="user-minus" className="mr-3"/>
                                             <span>Minimum order value</span>
                                         </li>
@@ -243,7 +243,7 @@ export default class Restaurants extends Component {
                                         <li>
                                             <FontAwesomeIcon icon="angle-double-right" className="mr-3"/>
                                             <span>Fastest delivery</span>
-                                        </li>
+                                        </li> */}
                                     </ul>
                                 </div>
                             </div>

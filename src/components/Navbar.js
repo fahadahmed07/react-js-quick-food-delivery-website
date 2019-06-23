@@ -1,10 +1,32 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
+import { update_user } from '../store/action';
 
 class Navbar extends Component {
+  constructor() {
+    super()
+    this.state = {
+
+    }
+  }
+
+  async componentDidMount() {
+    this.props.update_user();
+  }
+
+  static getDerivedStateFromProps(props){
+    console.log("getDerivedStateFromProps =>>",props.user)
+    return {
+      updated_user: props.user
+    }
+  }
+
   render() {
+    // console.log(this.props.user.email)
+    const {updated_user } = this.state
+    console.log("updated_user ===>>", updated_user)
     return (
       // Navbar
       <nav className="navbar navbar-expand-lg navbar-dark pt-3">
@@ -39,4 +61,18 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+const mapStateToProps = state => {
+  console.log("mapStateToProps states =>> ", state);
+  return {
+    user: state.user,
+    // todos: state.todos
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // store_user: (user) => dispatch(update_user(user)),
+    update_user: () => dispatch(update_user())
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
