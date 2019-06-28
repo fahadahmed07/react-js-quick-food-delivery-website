@@ -3,12 +3,12 @@ const reducer = (state = {}, action) => {
         case "SET_USER": {
             return {...state, user: action.user}
         }
-        // case "REMOVE_USER": {
-        //     return {...state, user: null}
-        // }
-        // case "UPDATE_TODOS": {
-        //     return {...state, todos: action.payload}
-        // }
+        case "REMOVE_USER": {
+            return {...state, user: action.user}
+        }
+        case "RESTAURANT_LIST": {
+            return {...state, restaurantList: action.restaurantList}
+        }
         default: {
             return state;
         }

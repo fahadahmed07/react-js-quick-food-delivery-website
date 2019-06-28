@@ -22,7 +22,45 @@ const update_user = () => {
     }
 }
 
+const remove_user = () => {
+    return (dispatch) => {
+        firebase.auth().signOut().then(() => {
+            // Sign-out successful.
+            console.log("Successfully log out");
+            dispatch({
+                type: 'REMOVE_USER',
+                user: { isLogin: false }
+            })
+        }).catch((error) => {
+            // An error happened.
+            let errorMessage = error.message;
+            console.log("Log Out Error Message => ", errorMessage);
+        });
+    }
+}
+
+const restaurant_list = () => {
+    return (dispatch) => {
+        db.collection('users').onSnapshot(snapshot => {
+            const restaurantList = [];    
+            snapshot.forEach(doc => {
+                if(doc.data().isRestaurant){
+                    const obj = {id: doc.id, ...doc.data()}
+                    restaurantList.push(obj);
+                }
+            })
+            // console.log('Restaurant List', restaurantList);
+            dispatch({
+                type: 'RESTAURANT_LIST',
+                restaurantList: restaurantList,
+            })
+        })
+    }
+}
+
 
 export {
     update_user,
+    remove_user,
+    restaurant_list,
 }

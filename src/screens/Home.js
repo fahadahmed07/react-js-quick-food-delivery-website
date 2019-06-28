@@ -8,6 +8,21 @@ import '../App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class Home extends Component {
+  constructor(){
+    super()
+    this.state = {
+      homeSearchBarText: "",
+    }
+    this.handleSearchBar = this.handleSearchBar.bind(this);
+  }
+
+  handleSearchBar(){
+    const {homeSearchBarText} = this.state
+    if(homeSearchBarText){
+      // console.log(homeSearchBarText)
+      this.props.history.push('/restaurants', this.state.homeSearchBarText)
+    }
+  }
   render() {
     return (
       <div>
@@ -20,10 +35,10 @@ class Home extends Component {
               <div className="container">
                 <div className="row justify-content-center">
                   <div className="col-lg-6 col-md-6 col-sm-12 mb-3">
-                    <input type="text" className="form-control text-uppercase" id="searchText" placeholder="Restaurant Name" />
+                    <input type="text" className="form-control text-uppercase" id="searchText" placeholder="Restaurant Name" onChange={(e)=>{this.setState({homeSearchBarText: e.target.value})}} />
                   </div>
                   <div className="col-lg-2 col-md-2 col-sm-12">
-                    <button type="submit" className="btn btn-warning mb-2 text-uppercase btn-block rounded-0">Search</button>
+                    <button type="button" className="btn btn-warning mb-2 text-uppercase btn-block rounded-0" onClick={this.handleSearchBar}>Search</button>
                   </div>
                 </div>
               </div>

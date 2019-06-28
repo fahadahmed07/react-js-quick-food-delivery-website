@@ -18,7 +18,7 @@ const db = firebase.firestore();
 
 function signUp(userDetails) {
     return new Promise((resolve, reject) => {
-        const { userName, userEmail, userPassword, userCity, userCountry, userGender, userAge, userProfileImage } = userDetails;
+        const { userName, userEmail, userPassword, userCity, userCountry, userGender, userAge, userProfileImage, isRestaurant, typeOfFood } = userDetails;
         firebase.auth().createUserWithEmailAndPassword(userDetails.userEmail, userDetails.userPassword).then((success) => {
             let user = firebase.auth().currentUser;
             var uid;
@@ -37,10 +37,13 @@ function signUp(userDetails) {
                         userGender: userGender,
                         userAge: userAge,
                         userUid: uid,
+                        isRestaurant: isRestaurant,
                         userProfileImageUrl: userProfileImageUrl,
+                        typeOfFood: typeOfFood,
                     }
                     db.collection("users").doc(uid).set(userDetailsForDb).then((docRef) => {
                         // console.log("Document written with ID: ", docRef.id);
+                        userDetails.propsHistory.push("/");
                         resolve(docRef.id)
                     }).catch(function (error) {
                         console.error("Error adding document: ", error);
@@ -68,14 +71,41 @@ function signUp(userDetails) {
     })
 }
 
+function logIn(userLoginDetails){
+    return new Promise((resolve, reject)=>{
+        const { userLoginEmail, userLoginPassword } = userLoginDetails;
+        firebase.auth().signInWithEmailAndPassword(userLoginEmail, userLoginPassword).then((success) => {
+            userLoginDetails.propsHistory.push("/");
+            resolve(success)
+        }).catch((error) => {
+            // Handle Errors here.
+            // var errorCode = error.code;
+            var errorMessage = error.message;
+            reject(errorMessage)
+        });
+
+    })
+}
+
+// function restaurantList(){
+//     return new Promise((resolve, reject)=>{
+//         db.collection('users').onSnapshot(snapshot => {
+//             const temp = [];    
+//             snapshot.forEach(doc => {
+//                 if(doc.data().isRestaurant){
+//                     const obj = {id: doc.id, ...doc.data()}
+//                     temp.push(obj);
+//                 }
+//             })
+//             console.log('Restaurant List', temp);
+
+//         })
+//     });
+// }
 
 export default firebase;
 export {
     signUp,
+    logIn,
+    // restaurantList,
 }
-
-
-
-
-
-

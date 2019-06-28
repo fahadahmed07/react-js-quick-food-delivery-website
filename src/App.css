@@ -242,7 +242,15 @@ a:hover{
 }
 
 
-/* For Restaurant.js */
+/* For Restaurants.js */
+.restaurants-cont1{
+  background: url('./assets/images/fb-subheader-2.jpg') no-repeat center / cover;
+}
+
+.restaurants-cont1-text{
+  padding-top: 100px !important;
+  padding-bottom: 100px !important;
+}
 
 .input-group-text{
   color: #999ba3;
@@ -314,6 +322,51 @@ a:hover{
 .sort-by ul li:hover{
   color: #eb6825;
 }
+
+
+/* RestaurantDetails.js */
+
+.res-details-cont1{
+  background: url('./assets/images/cover-photo20.jpg') no-repeat scroll 0 0 / cover;
+}
+
+.res-details-cont1-text{
+  padding-top: 100px !important;
+  padding-bottom: 100px !important;
+}
+
+.listing-category .category-heading{
+  /* border-top: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1; */
+}
+
+.category-list{
+  list-style: none;
+}
+.category-list li{
+  /* padding-bottom: 17px; */
+}
+
+.listing-category ul li p {
+  color: #999ba3 !important;
+  cursor: pointer !important;
+  font-size: 13px;
+  line-height: 24px;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0px;
+  padding: 10px 0px;
+  border-bottom: 1px solid #dee1e9;
+}
+
+.listing-category ul li p:hover {
+  color: #eb6825 !important;
+}
+
+
+
+
+
+
 
 
 

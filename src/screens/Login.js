@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import {signUp} from '../config/firebase';
+import {signUp, logIn} from '../config/firebase';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../App.css'
@@ -24,6 +24,8 @@ export default class Login extends Component {
             userProfileImage: null,
             userTNC: false,
             showError: false,
+            userLoginEmail: "",
+            userLoginPassword: "",
         }
         this.handleForms = this.handleForms.bind(this);
         this.handleUserName = this.handleUserName.bind(this);
@@ -37,6 +39,7 @@ export default class Login extends Component {
         this.handleUserProfileImage = this.handleUserProfileImage.bind(this);
         this.handleUserTNC = this.handleUserTNC.bind(this);
         this.handleUserGender = this.handleUserGender.bind(this);
+        this.handleLoginNowBtn = this.handleLoginNowBtn.bind(this);
     }
 
     handleForms() {
@@ -294,6 +297,8 @@ export default class Login extends Component {
                 userGender: userGender,
                 userAge: userAge,
                 userProfileImage: userProfileImage,
+                isRestaurant: false,
+                propsHistory: this.props.history,
             }
             try {
                 const signUpReturn = await signUp(userDetails)
@@ -301,6 +306,23 @@ export default class Login extends Component {
             }catch(e){
                 console.log(e)
             }
+        }
+    }
+
+    async handleLoginNowBtn(){
+        const { userLoginEmail, userLoginPassword } = this.state;
+        console.log("userLoginEmail ===>> ", userLoginEmail)
+        console.log("userLoginPassword ===>> ", userLoginPassword)
+        const userLoginDetails = {
+            userLoginEmail: userLoginEmail,
+            userLoginPassword: userLoginPassword,
+            propsHistory: this.props.history,
+        }
+        try {
+            const LoginReturn = await logIn(userLoginDetails)
+            console.log(LoginReturn)
+        }catch(e){
+            console.log(e)
         }
     }
 
@@ -387,13 +409,13 @@ export default class Login extends Component {
                             <form action="javascript:void(0)">
                                 <div className="form-group">
                                     <label htmlFor="userLoginEmail">Email</label>
-                                    <input type="email" className="form-control" id="userLoginEmail" placeholder="Email" />
+                                    <input type="email" className="form-control" id="userLoginEmail" placeholder="Email" onChange={(e) => this.setState({userLoginEmail: e.target.value})} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="userLoginPassword">Password</label>
-                                    <input type="password" className="form-control" id="userLoginPassword" placeholder="Password" />
+                                    <input type="password" className="form-control" id="userLoginPassword" placeholder="Password" onChange={(e) => this.setState({userLoginPassword: e.target.value})} />
                                 </div>
-                                <button type="submit" className="btn btn-warning text-uppercase mb-3"><b>Login Now</b></button>
+                                <button type="submit" className="btn btn-warning text-uppercase mb-3" onClick={this.handleLoginNowBtn}><b>Login Now</b></button>
                             </form>
                             <p className="m-0">Don't have an account yet? <span className="cursor-pointer text-warning" onClick={this.handleForms}>Create an Account</span></p>
                         </div>
