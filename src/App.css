@@ -10,7 +10,7 @@
 }
 
 *, body{
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif !important;
 }
 
 .bg-warning{
@@ -113,8 +113,8 @@ a:hover{
 
 /* For Navbar.js */
 .nav-link{
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 13px !important;
+  font-weight: 700 !important;
   color: #fff !important;
 }
 .nav-item .active{
@@ -290,7 +290,7 @@ a:hover{
   cursor: pointer !important;
   font-size: 13px;
   line-height: 24px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif !important;
 }
 
 .listing-filter ul li .custom-control-input:checked ~ .custom-control-label::before {
@@ -352,7 +352,7 @@ a:hover{
   cursor: pointer !important;
   font-size: 13px;
   line-height: 24px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif !important;
   margin: 0px;
   padding: 10px 0px;
   border-bottom: 1px solid #dee1e9;
@@ -362,8 +362,102 @@ a:hover{
   color: #eb6825 !important;
 }
 
+.restaurant-title {
+  font: 400 32px 'Montserrat', sans-serif !important;
+  color: white;
+}
 
+.restaurant-text {
+  font: 400 14px/24px 'Open Sans', sans-serif !important;
+  color: white;
+}
 
+.res-details-tab-active{
+  background-color: white !important;
+  color: #eb6825 !important;
+  box-shadow: 0 -5px 4px -2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.res-details-tab-text {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  font-family: "Roboto", sans-serif !important;
+  cursor: pointer;
+  margin: 12px 0px !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.res-details-tab-text:hover {
+  color: #eb6825 !important;  
+}
+
+.input-group .search-menu-input {
+  color: #aaaaaa !important;
+  /* border-bottom: 1px solid #ced4da !important; */
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
+
+.input-group .search-menu-input::placeholder {
+  color: #b0b1bd !important;
+}
+
+.input-group-append .search-menu-text {
+  color: #b0b1bd !important;
+  /* border-bottom: 1px solid #ced4da !important; */
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}
+
+.order-card ul{
+  list-style: none;
+}
+
+.order-card h5{
+  font: 700 Normal 16px/22px "Montserrat", sans-serif !important;
+}
+.order-card p{
+  font-size: 12px !important;
+  font-family: "Roboto", sans-serif !important;
+}
+
+.order-card .food-item {
+  font-size: 12px !important;
+  font-family: "Roboto", sans-serif !important;
+}
+
+.food-price{
+  font-weight: 600 !important;
+}
+
+.remove-food-item{
+  color: #999ba3 !important;
+  font-size: 10px !important;
+  margin-left: 10px !important;
+}
+
+.review-section h5 {
+  font: 700 Normal 16px/22px "Montserrat", sans-serif !important;
+}
+
+.info-section h5 {
+  font: 700 Normal 16px/22px "Montserrat", sans-serif !important;
+}
+.info-section p {
+  font: Normal 14px/24px "Roboto", sans-serif !important;
+    /* font-style: normal; */
+    /* font-variant-ligatures: normal; */
+    /* font-variant-caps: normal; */
+    /* font-variant-numeric: normal; */
+    /* font-variant-east-asian: normal; */
+    /* font-weight: normal; */
+    /* font-stretch: normal; */
+    /* font-size: 14px; */
+    /* line-height: 24px; */
+    /* font-family: "Roboto", sans-serif; */
+}
 
 
 

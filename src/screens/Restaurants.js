@@ -22,10 +22,11 @@ class Restaurants extends Component {
         this.handleCategoriesCheckbox = this.handleCategoriesCheckbox.bind(this);
         this.handleSearchBar = this.handleSearchBar.bind(this);
     }
+
     async componentDidMount() {
         this.props.restaurant_list();
         const { state } = this.props.location
-        if(state){
+        if (state) {
             // console.log("resturant state => ", state)
             this.setState({
                 defaultSearchValue: state,
@@ -35,7 +36,7 @@ class Restaurants extends Component {
     }
 
     handleCategoriesCheckbox(event) {
-        const { categories,} = this.state;
+        const { categories, } = this.state;
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
@@ -78,17 +79,17 @@ class Restaurants extends Component {
         }
     }
 
-    handleSearchBar(event){
+    handleSearchBar(event) {
         // console.log("event => ", event)
         const searchText = event;
         const { restaurantList } = this.props;
-        if(restaurantList){
-            Object.keys(restaurantList).map((val) =>{});
-            const result = restaurantList.filter((val)=>{
-                return val.userName.substring(0, searchText.length).toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) !== -1;
+        if (restaurantList) {
+            Object.keys(restaurantList).map((val) => { });
+            const result = restaurantList.filter((val) => {
+                return val.userName.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) !== -1;
             })
             console.log("result => ", result)
-            if(searchText.length > 0){
+            if (searchText.length > 0) {
                 this.setState({
                     renderRestaurantList: false,
                     renderCategorizedRestaurants: false,
@@ -97,17 +98,22 @@ class Restaurants extends Component {
                     searchText: searchText,
                     defaultSearchValue: searchText,
                 })
-            }else{
+            } else {
                 this.setState({
                     renderRestaurantList: true,
                     renderCategorizedRestaurants: false,
                     renderSearchRestaurants: false,
                     searchRestaurants: result,
-                    searchText: searchText, 
+                    searchText: searchText,
                     defaultSearchValue: searchText,
                 })
             }
         }
+    }
+
+    handleViewMenuBtn(resDetails) {
+        // console.log(resDetails)
+        this.props.history.push('/restaurant-details', resDetails)
     }
 
     _renderRestaurantList() {
@@ -139,7 +145,7 @@ class Restaurants extends Component {
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-12 py-4 px-0">
                                 <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '4px 7px 4px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
-                                <button type="button" className="btn btn-warning btn-sm text-uppercase">View Menu</button>
+                                <button type="button" onClick={() => this.handleViewMenuBtn(restaurantList[val])} className="btn btn-warning btn-sm text-uppercase">View Menu</button>
                             </div>
                         </div>
                     </div>
@@ -181,7 +187,7 @@ class Restaurants extends Component {
                                         </div>
                                         <div className="col-lg-3 col-md-3 col-sm-12 py-4 px-0">
                                             <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '4px 7px 4px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
-                                            <button type="button" className="btn btn-warning btn-sm text-uppercase">View Menu</button>
+                                            <button type="button" onClick={() => this.handleViewMenuBtn(restaurantList[val])} className="btn btn-warning btn-sm text-uppercase">View Menu</button>
                                         </div>
                                     </div>
                                 </div>
@@ -193,9 +199,9 @@ class Restaurants extends Component {
         }
     }
 
-    _renderSearchRestaurants(){
+    _renderSearchRestaurants() {
         const { searchText, searchRestaurants } = this.state;
-        if(searchRestaurants){
+        if (searchRestaurants) {
             return Object.keys(searchRestaurants).map((val) => {
                 // console.log("val", val)
                 // console.log("restaurantList", restaurantList[val])
@@ -221,7 +227,7 @@ class Restaurants extends Component {
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-12 py-4 px-0">
                                 <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '4px 7px 4px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
-                                <button type="button" className="btn btn-warning btn-sm text-uppercase">View Menu</button>
+                                <button type="button" onClick={() => this.handleViewMenuBtn(searchRestaurants[val])} className="btn btn-warning btn-sm text-uppercase">View Menu</button>
                             </div>
                         </div>
                     </div>
@@ -245,7 +251,7 @@ class Restaurants extends Component {
                                             <div className="input-group-prepend">
                                                 <span className="input-group-text" id="inputGroup-sizing-sm"><FontAwesomeIcon icon="search" /></span>
                                             </div>
-                                            <input type="text" value={defaultSearchValue} onChange={(e)=>this.handleSearchBar(e.target.value)} className="form-control" placeholder="RESTAURANT NAME" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"  />
+                                            <input type="text" value={defaultSearchValue} onChange={(e) => this.handleSearchBar(e.target.value)} className="form-control" placeholder="RESTAURANT NAME" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
                                         </div>
                                     </div>
                                 </div>

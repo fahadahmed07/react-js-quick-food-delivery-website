@@ -71,8 +71,8 @@ function signUp(userDetails) {
     })
 }
 
-function logIn(userLoginDetails){
-    return new Promise((resolve, reject)=>{
+function logIn(userLoginDetails) {
+    return new Promise((resolve, reject) => {
         const { userLoginEmail, userLoginPassword } = userLoginDetails;
         firebase.auth().signInWithEmailAndPassword(userLoginEmail, userLoginPassword).then((success) => {
             userLoginDetails.propsHistory.push("/");
