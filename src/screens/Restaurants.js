@@ -27,7 +27,6 @@ class Restaurants extends Component {
         this.props.restaurant_list();
         const { state } = this.props.location
         if (state) {
-            // console.log("resturant state => ", state)
             this.setState({
                 defaultSearchValue: state,
             })
@@ -40,9 +39,6 @@ class Restaurants extends Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-
-        // console.log("name ==>", name)
-        // console.log("value ==>", value)
         if (value) {
             categories.push(name);
             this.setState({
@@ -80,7 +76,6 @@ class Restaurants extends Component {
     }
 
     handleSearchBar(event) {
-        // console.log("event => ", event)
         const searchText = event;
         const { restaurantList } = this.props;
         if (restaurantList) {
@@ -88,7 +83,6 @@ class Restaurants extends Component {
             const result = restaurantList.filter((val) => {
                 return val.userName.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) !== -1;
             })
-            console.log("result => ", result)
             if (searchText.length > 0) {
                 this.setState({
                     renderRestaurantList: false,
@@ -112,17 +106,13 @@ class Restaurants extends Component {
     }
 
     handleViewMenuBtn(resDetails) {
-        // console.log(resDetails)
         this.props.history.push('/restaurant-details', resDetails)
     }
 
     _renderRestaurantList() {
         const { restaurantList } = this.props;
-        // console.log(restaurantList)
         if (restaurantList) {
             return Object.keys(restaurantList).map((val) => {
-                // console.log("val", val)
-                // console.log("restaurantList", restaurantList[val])
                 return (
                     <div className="container bg-white p-3 px-0 mb-4" key={restaurantList[val].id}>
                         <div className="row">
@@ -157,13 +147,11 @@ class Restaurants extends Component {
     _renderCategorizedRestaurants() {
         const { restaurantList } = this.props;
         const { categories, } = this.state;
-        // console.log("selectedCategories => ", categories)
         if (restaurantList) {
             return Object.keys(restaurantList).map((val) => {
                 return restaurantList[val].typeOfFood.map((e1) => {
                     return categories.map((e2) => {
                         if (e1 === e2) {
-                            // console.log("e1 => ", e1)
                             // console.log("restaurantList[val].userName => ", restaurantList[val].userName)
                             return (
                                 <div className="container bg-white p-3 px-0 mb-4" key={restaurantList[val].id}>
@@ -203,8 +191,6 @@ class Restaurants extends Component {
         const { searchText, searchRestaurants } = this.state;
         if (searchRestaurants) {
             return Object.keys(searchRestaurants).map((val) => {
-                // console.log("val", val)
-                // console.log("restaurantList", restaurantList[val])
                 return (
                     <div className="container bg-white p-3 px-0 mb-4" key={searchRestaurants[val].id}>
                         <div className="row">
@@ -242,7 +228,7 @@ class Restaurants extends Component {
             <div>
                 <div className="container-fluid restaurants-cont1">
                     <div className="">
-                        <Navbar />
+                        <Navbar history={this.props.history} />
                         <div className="container px-0 restaurants-cont1-text">
                             <div className="container">
                                 <div className="row justify-content-center">
@@ -316,131 +302,6 @@ class Restaurants extends Component {
                                         {renderSearchRestaurants && this._renderSearchRestaurants()}
                                         {renderCategorizedRestaurants && this._renderCategorizedRestaurants()}
                                         {renderRestaurantList && this._renderRestaurantList()}
-                                        {/* <div className="container bg-white p-3 px-0 mb-4">
-                                            <div className="row">
-                                                <div className="col-lg-3 col-md-3 col-sm-12 px-0 text-center">
-                                                    <img style={{ width: "70%" }} alt="Natural Healthy Food" src={require("../assets/images/listing-logo03.png")} />
-                                                </div>
-                                                <div className="col-lg-6 col-md-6 col-sm-12 px-0">
-                                                    <p>
-                                                        <small className="">
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                        </small>
-                                                        <small>(1) Review</small>
-                                                    </p>
-                                                    <h5 className="">Natural Healthy Food</h5>
-                                                    <p className=""><small>Apple Juice, Beef Roast, Cheese Burger</small></p>
-                                                </div>
-                                                <div className="col-lg-3 col-md-3 col-sm-12 py-4 px-0">
-                                                    <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '4px 7px 4px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
-                                                    <button type="button" className="btn btn-warning btn-sm text-uppercase">View Menu</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="container bg-white p-3 px-0 mb-4">
-                                            <div className="row">
-                                                <div className="col-lg-3 col-md-3 col-sm-12 px-0 text-center">
-                                                    <img style={{ width: "70%" }} alt="Natural Healthy Food" src={require("../assets/images/listing-logo09.png")} />
-                                                </div>
-                                                <div className="col-lg-6 col-md-6 col-sm-12 px-0">
-                                                    <p>
-                                                        <small className="">
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                        </small>
-                                                        <small>(1) Review</small>
-                                                    </p>
-                                                    <h5 className="">Menu &amp; Drinks</h5>
-                                                    <p className=""><small>Type of food : Chicken Roast, Chines Soup, Cold Coffee</small></p>
-                                                </div>
-                                                <div className="col-lg-3 col-md-3 col-sm-12 py-4 px-0">
-                                                    <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '4px 7px 4px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
-                                                    <button type="button" className="btn btn-warning btn-sm text-uppercase">View Menu</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="container bg-white p-3 px-0 mb-4">
-                                            <div className="row">
-                                                <div className="col-lg-3 col-md-3 col-sm-12 px-0 text-center">
-                                                    <img style={{ width: "70%" }} alt="Natural Healthy Food" src={require("../assets/images/listing-logo12.png")} />
-                                                </div>
-                                                <div className="col-lg-6 col-md-6 col-sm-12 px-0">
-                                                    <p>
-                                                        <small className="">
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                        </small>
-                                                        <small>(1) Review</small>
-                                                    </p>
-                                                    <h5 className="">Chefs</h5>
-                                                    <p className=""><small>Type of food : Egg Fry, Noodles, Pastry</small></p>
-                                                </div>
-                                                <div className="col-lg-3 col-md-3 col-sm-12 py-4 px-0">
-                                                    <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '4px 7px 4px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
-                                                    <button type="button" className="btn btn-warning btn-sm text-uppercase">View Menu</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="container bg-white p-3 px-0 mb-4">
-                                            <div className="row">
-                                                <div className="col-lg-3 col-md-3 col-sm-12 px-0 text-center">
-                                                    <img style={{ width: "70%" }} alt="Natural Healthy Food" src={require("../assets/images/listing-logo15.png")} />
-                                                </div>
-                                                <div className="col-lg-6 col-md-6 col-sm-12 px-0">
-                                                    <p>
-                                                        <small className="">
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                        </small>
-                                                        <small>(1) Review</small>
-                                                    </p>
-                                                    <h5 className="">Menu's</h5>
-                                                    <p className=""><small>Type of food : Fish Fry, Fresh Juice, Stakes</small></p>
-                                                </div>
-                                                <div className="col-lg-3 col-md-3 col-sm-12 py-4 px-0">
-                                                    <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '4px 7px 4px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
-                                                    <button type="button" className="btn btn-warning btn-sm text-uppercase">View Menu</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="container bg-white p-3 px-0 mb-4">
-                                            <div className="row">
-                                                <div className="col-lg-3 col-md-3 col-sm-12 px-0 text-center">
-                                                    <img style={{ width: "70%" }} alt="Natural Healthy Food" src={require("../assets/images/listing-logo13.png")} />
-                                                </div>
-                                                <div className="col-lg-6 col-md-6 col-sm-12 px-0">
-                                                    <p>
-                                                        <small className="">
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                            <FontAwesomeIcon icon="star" className="rating mr-1" />
-                                                        </small>
-                                                        <small>(1) Review</small>
-                                                    </p>
-                                                    <h5 className="">Restaurant</h5>
-                                                    <p className=""><small>Type of food : Apple Juice, BB.Q</small></p>
-                                                </div>
-                                                <div className="col-lg-3 col-md-3 col-sm-12 py-4 px-0">
-                                                    <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '4px 7px 4px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
-                                                    <button type="button" className="btn btn-warning btn-sm text-uppercase">View Menu</button>
-                                                </div>
-                                            </div>
-                                        </div> */}
                                     </div>
                                 </div>
                             </div>

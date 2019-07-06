@@ -9,23 +9,28 @@ class Navbar extends Component {
   constructor() {
     super()
     this.state = {
-
+      homeIconLink: '/'
     }
-    this.withLogin = this.withLogin.bind(this);
+    this._renderWithLogin = this._renderWithLogin.bind(this);
   }
 
   async componentDidMount() {
     this.props.update_user();
     if (this.props.user) {
-      // console.log("this.props.user ==>>", this.props.user)
     }
   }
 
   static getDerivedStateFromProps(props) {
-    if (props.user) {     
-      // console.log("getDerivedStateFromProps =>>", props)
-      return {
-        updated_user: props.user
+    if (props.user) {
+      if (props.user.isRestaurant) {
+        return {
+          updated_user: props.user,
+          homeIconLink: '/order-requests',
+        }
+      } else {
+        return {
+          updated_user: props.user,
+        }
       }
     } else {
       return {
@@ -36,7 +41,13 @@ class Navbar extends Component {
     }
   }
 
-  withOutLogin() {
+  handleLogOutBtn(){
+    this.props.remove_user()
+    // console.log(this.props.history)
+    this.props.history.push('/')
+  }
+
+  _renderWithOutLogin() {
     return (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
@@ -53,35 +64,57 @@ class Navbar extends Component {
       </ul>
     )
   }
-  withLogin() {
+
+  _renderWithLogin() {
     const { updated_user } = this.state
-    // this.props.history.push('/')
-    return (
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <span className="nav-link active text-uppercase mr-2"><Link to="/restaurants">Restaurants</Link></span>
-        </li>
-        <li className="nav-item">
-          <span className="nav-link active text-uppercase mr-2">{updated_user.userName}</span>
-        </li>
-        <li className="nav-item">
-          <button type="button" className="btn btn-warning btn-sm text-uppercase mr-2 mr-1 px-3" onClick={()=>this.props.remove_user()}>Log Out</button>
-        </li>
-      </ul>
-    )
+    if (updated_user.isRestaurant) {
+      return (
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <span className="nav-link active text-uppercase mr-2"><Link to="/add-menu-items">Add Foods</Link></span>
+          </li>
+          <li className="nav-item">
+            <span className="nav-link active text-uppercase mr-2"><Link to="/my-foods">My Foods</Link></span>
+          </li>
+          <li className="nav-item">
+            <span className="nav-link active text-uppercase mr-2"><Link to="/order-requests">Order Requests</Link></span>
+          </li>
+          <li className="nav-item">
+            <span className="nav-link active text-uppercase mr-2">{updated_user.userName}</span>
+          </li>
+          <li className="nav-item">
+            <button type="button" className="btn btn-warning btn-sm text-uppercase mr-2 mr-1 px-3" onClick={() => this.handleLogOutBtn()}>Log Out</button>
+          </li>
+        </ul>
+      )
+    } else {
+      return (
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <span className="nav-link active text-uppercase mr-2"><Link to="/restaurants">Restaurants</Link></span>
+          </li>
+          <li className="nav-item">
+            <span className="nav-link active text-uppercase mr-2"><Link to="/my-orders">My Orders</Link></span>
+          </li>
+          <li className="nav-item">
+            <span className="nav-link active text-uppercase mr-2">{updated_user.userName}</span>
+          </li>
+          <li className="nav-item">
+            <button type="button" className="btn btn-warning btn-sm text-uppercase mr-2 mr-1 px-3" onClick={() => this.handleLogOutBtn()}>Log Out</button>
+          </li>
+        </ul>
+      )
+    }
   }
 
-
   render() {
-    // console.log(this.props.user.email)
-    const { updated_user } = this.state
-    // console.log("updated_user render ===>>", updated_user && updated_user.isLogin) // or yaha sahi object mil raha hai
-    // console.log("updated_user ===>>", updated_user.email) // is py error araha hai sir
+    const { updated_user, homeIconLink } = this.state
     return (
       // Navbar
       <nav className="navbar navbar-expand-lg navbar-dark pt-3">
+        
         {/* Brand image */}
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to={homeIconLink}>
           <img alt="Quick Food Logo" src={require("../assets/images/logo.png")} />
         </Link>
 
@@ -92,26 +125,7 @@ class Navbar extends Component {
 
         {/* Navbar Links */}
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          {/* <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <span className="nav-link text-uppercase mr-2"><Link to="/login">Login / Register</Link></span>
-            </li>
-            <li className="nav-item">
-              <Link to="/register-restaurant">
-                <button type="button" className="btn btn-warning btn-sm text-uppercase mr-2 mr-1 px-3">Register Restaurant</button>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <span className="nav-link active text-uppercase mr-2"><Link to="/restaurants">Restaurants</Link></span>
-            </li>
-            <li className="nav-item">
-              <span className="nav-link active text-uppercase mr-2">{updated_user.userName}</span>
-            </li>
-            <li className="nav-item">
-              <button type="button" className="btn btn-warning btn-sm text-uppercase mr-2 mr-1 px-3" onClick={logOut}>Log Out</button>
-            </li>
-          </ul> */}
-          {updated_user.isLogin ? this.withLogin() : this.withOutLogin()}
+          {updated_user.isLogin ? this._renderWithLogin() : this._renderWithOutLogin()}
         </div>
       </nav>
     );
@@ -119,16 +133,13 @@ class Navbar extends Component {
 }
 
 const mapStateToProps = state => {
-  // console.log("mapStateToProps states =>> ", state);
   return {
     user: state.user,
-    // todos: state.todos
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    // store_user: (user) => dispatch(update_user(user)),
     update_user: () => dispatch(update_user()),
     remove_user: () => dispatch(remove_user())
   }

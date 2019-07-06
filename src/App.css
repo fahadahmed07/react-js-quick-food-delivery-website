@@ -335,16 +335,8 @@ a:hover{
   padding-bottom: 100px !important;
 }
 
-.listing-category .category-heading{
-  /* border-top: 1px solid #e1e1e1;
-  border-bottom: 1px solid #e1e1e1; */
-}
-
 .category-list{
   list-style: none;
-}
-.category-list li{
-  /* padding-bottom: 17px; */
 }
 
 .listing-category ul li p {
@@ -393,7 +385,6 @@ a:hover{
 
 .input-group .search-menu-input {
   color: #aaaaaa !important;
-  /* border-bottom: 1px solid #ced4da !important; */
   border-top: none;
   border-right: none;
   border-left: none;
@@ -405,10 +396,20 @@ a:hover{
 
 .input-group-append .search-menu-text {
   color: #b0b1bd !important;
-  /* border-bottom: 1px solid #ced4da !important; */
   border-top: none;
   border-right: none;
   border-left: none;
+}
+
+.menuItemsListAddBtn{
+  display: inline-block;
+  text-align: center;
+  font-size: 12px;
+  border-radius: 80px;
+  border: 1px solid #eb6825;
+  padding: 4px 8px 4px 8px;
+  margin: 0px 16px;
+  cursor: pointer;
 }
 
 .order-card ul{
@@ -436,6 +437,7 @@ a:hover{
   color: #999ba3 !important;
   font-size: 10px !important;
   margin-left: 10px !important;
+  cursor: pointer;
 }
 
 .review-section h5 {
@@ -445,20 +447,39 @@ a:hover{
 .info-section h5 {
   font: 700 Normal 16px/22px "Montserrat", sans-serif !important;
 }
+
 .info-section p {
   font: Normal 14px/24px "Roboto", sans-serif !important;
-    /* font-style: normal; */
-    /* font-variant-ligatures: normal; */
-    /* font-variant-caps: normal; */
-    /* font-variant-numeric: normal; */
-    /* font-variant-east-asian: normal; */
-    /* font-weight: normal; */
-    /* font-stretch: normal; */
-    /* font-size: 14px; */
-    /* line-height: 24px; */
-    /* font-family: "Roboto", sans-serif; */
 }
 
+/* OrderRequests.js */
+
+
+.order-req-tab-text {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  font-family: "Roboto", sans-serif !important;
+  cursor: pointer;
+  margin: 12px 0px !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.order-req-tab-text:hover {
+  color: #eb6825 !important;  
+}
+
+.order-req-status{
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  font-family: "Roboto", sans-serif !important;
+  letter-spacing: 1px;
+}
+
+.order-req-tab-active{
+  background-color: white !important;
+  color: #eb6825 !important;
+  box-shadow: 0 -5px 4px -2px rgba(0, 0, 0, 0.1) !important;
+}
 
 
 

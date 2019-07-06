@@ -28,6 +28,7 @@ function signUp(userDetails) {
             firebase.storage().ref().child(`userProfileImage/${uid}/` + userProfileImage.name).put(userProfileImage).then((url) => {
                 url.ref.getDownloadURL().then((success) => {
                     const userProfileImageUrl = success
+                    console.log(userProfileImageUrl)
                     const userDetailsForDb = {
                         userName: userName,
                         userEmail: userEmail,
@@ -43,8 +44,13 @@ function signUp(userDetails) {
                     }
                     db.collection("users").doc(uid).set(userDetailsForDb).then((docRef) => {
                         // console.log("Document written with ID: ", docRef.id);
-                        userDetails.propsHistory.push("/");
-                        resolve(docRef.id)
+                        if(userDetailsForDb.isRestaurant){
+                            userDetails.propsHistory.push("/order-requests");
+                            resolve(userDetailsForDb)
+                        }else{
+                            userDetails.propsHistory.push("/");
+                            resolve(userDetailsForDb)
+                        }
                     }).catch(function (error) {
                         console.error("Error adding document: ", error);
                         reject(error)
@@ -75,8 +81,16 @@ function logIn(userLoginDetails) {
     return new Promise((resolve, reject) => {
         const { userLoginEmail, userLoginPassword } = userLoginDetails;
         firebase.auth().signInWithEmailAndPassword(userLoginEmail, userLoginPassword).then((success) => {
-            userLoginDetails.propsHistory.push("/");
-            resolve(success)
+            db.collection('users').doc(success.user.uid).get().then((snapshot) => {
+                console.log("snapshot.data =>>", snapshot.data().isRestaurant);
+                if(snapshot.data().isRestaurant){
+                    userLoginDetails.propsHistory.push("/order-requests");
+                    resolve(success)
+                }else{
+                    userLoginDetails.propsHistory.push("/");
+                    resolve(success)
+                }             
+            })
         }).catch((error) => {
             // Handle Errors here.
             // var errorCode = error.code;
@@ -87,25 +101,97 @@ function logIn(userLoginDetails) {
     })
 }
 
-// function restaurantList(){
-//     return new Promise((resolve, reject)=>{
-//         db.collection('users').onSnapshot(snapshot => {
-//             const temp = [];    
-//             snapshot.forEach(doc => {
-//                 if(doc.data().isRestaurant){
-//                     const obj = {id: doc.id, ...doc.data()}
-//                     temp.push(obj);
-//                 }
-//             })
-//             console.log('Restaurant List', temp);
+function addItem(itemDetails) {
+    const { itemTitle, itemIngredients, itemPrice, itemImage, chooseItemType, } = itemDetails;
+    return new Promise((resolve, reject) => {
+        let user = firebase.auth().currentUser;
+        var uid;
+        if (user != null) {
+            uid = user.uid;
+        };
+        firebase.storage().ref().child(`itemImage/${uid}/` + itemImage.name).put(itemImage).then((url) => {
+            url.ref.getDownloadURL().then((success) => {
+                const itemImageUrl = success
+                console.log(itemImageUrl)
+                const itemDetailsForDb = {
+                    itemTitle: itemTitle,
+                    itemIngredients: itemIngredients,
+                    itemPrice: itemPrice,
+                    itemImageUrl: itemImageUrl,
+                    chooseItemType: chooseItemType,
+                    // userUid: uid,
+                }
+                db.collection("users").doc(uid).collection("menuItems").add(itemDetailsForDb).then((docRef) => {
+                    // console.log("Document written with ID: ", docRef.id);
+                    itemDetails.propsHistory.push("/my-foods");
+                    resolve(docRef.id)
+                }).catch(function (error) {
+                    console.error("Error adding document: ", error);
+                    reject(error)
+                })
+            }).catch((error) => {
+                // Handle Errors here.
+                let errorCode = error.code;
+                let errorMessage = error.message;
+                console.log("Error in getDownloadURL function", errorCode);
+                console.log("Error in getDownloadURL function", errorMessage);
+                reject(errorMessage)
+            })
+        }).catch((error) => {
+            // Handle Errors here.
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            console.log("Error in Image Uploading", errorMessage);
+            reject(errorMessage)
+        })
+    })
+}
 
-//         })
-//     });
-// }
+function orderNow(cartItemsList, totalPrice, resDetails, userDetails) {
+    return new Promise((resolve, reject) => {
+        let user = firebase.auth().currentUser;
+        var uid;
+        if (user != null) {
+            uid = user.uid;
+        };
+
+        const myOrder = {
+            itemsList: cartItemsList,
+            totalPrice: totalPrice,
+            status: "PENDING",
+            ...resDetails,
+        }
+
+        const orderRequest = {
+            itemsList: cartItemsList,
+            totalPrice: totalPrice,
+            status: "PENDING",
+            ...userDetails,
+        }
+
+        console.log("myOrder => ", myOrder)
+        console.log("orderRequest => ", orderRequest)
+        db.collection("users").doc(uid).collection("myOrder").add(myOrder).then((docRef) => {
+            console.log(docRef.id)
+            db.collection("users").doc(resDetails.id).collection("orderRequest").doc(docRef.id).set(orderRequest).then((docRef) => {
+                // console.log("Document written with ID: ", docRef.id);
+                // itemDetails.propsHistory.push("/");
+                // resolve(docRef.id)
+            }).catch(function (error) {
+                console.error("Error adding document: ", error);
+                reject(error)
+            })
+        }).catch(function (error) {
+            console.error("Error adding document: ", error);
+            reject(error)
+        })
+    })
+}
 
 export default firebase;
 export {
     signUp,
     logIn,
-    // restaurantList,
+    addItem,
+    orderNow,
 }

@@ -160,7 +160,6 @@ export default class Login extends Component {
     }
 
     handleUserGender(e) {
-        console.log(e.target.value)
         this.setState({
             userGender: e.target.value,
         })
@@ -229,27 +228,23 @@ export default class Login extends Component {
         const userCityFormate = /^([A-Za-z.\s_-]).{5,}$/;
 
         if (!userName.match(userNameFormate)) {
-            console.log("User Name Formate ==> ", userName.match(userNameFormate));
             this.setState({
                 showError: true,
                 registerFormError: "Please enter a valid name.",
             });
         } else if (!userEmail.match(userEmailFormate)) {
-            console.log("Email Formate ==> ", userEmail.match(userEmailFormate));
             this.setState({
                 showError: true,
                 registerFormError: "Please enter a valid email address.",
                 userEmail: ""
             });
         } else if (!userPassword.match(userPasswordFormate)) {
-            console.log("Password Formate ==> ", userPassword.match(userPasswordFormate));
             this.setState({
                 showError: true,
                 registerFormError: "Use alphanumeric, uppercase, lowercase & greater than 10 characters.",
                 userPassword: "",
             });
         } else if (!userConfirmPassword) {
-            console.log("Confirm Password Formate ==> ", !userConfirmPassword);
             this.setState({
                 showError: true,
                 registerFormError: "Confirmation password not matched.",
@@ -287,7 +282,7 @@ export default class Login extends Component {
                 registerFormError: "Please accept terms and conditions.",
             })
         } else {
-            console.log(userName, userEmail, userPassword, userConfirmPassword, userCity, userCountry, userGender, userAge, userProfileImage, userTNC)
+            // console.log(userName, userEmail, userPassword, userConfirmPassword, userCity, userCountry, userGender, userAge, userProfileImage, userTNC)
             const userDetails = {
                 userName: userName,
                 userEmail: userEmail,
@@ -299,20 +294,19 @@ export default class Login extends Component {
                 userProfileImage: userProfileImage,
                 isRestaurant: false,
                 propsHistory: this.props.history,
+                typeOfFood: [],
             }
             try {
                 const signUpReturn = await signUp(userDetails)
-                console.log(signUpReturn)
-            }catch(e){
-                console.log(e)
+                // console.log(signUpReturn)
+            }catch(error){
+                console.log("Error in Sign up => ",error)
             }
         }
     }
 
     async handleLoginNowBtn(){
         const { userLoginEmail, userLoginPassword } = this.state;
-        console.log("userLoginEmail ===>> ", userLoginEmail)
-        console.log("userLoginPassword ===>> ", userLoginPassword)
         const userLoginDetails = {
             userLoginEmail: userLoginEmail,
             userLoginPassword: userLoginPassword,
@@ -320,9 +314,9 @@ export default class Login extends Component {
         }
         try {
             const LoginReturn = await logIn(userLoginDetails)
-            console.log(LoginReturn)
-        }catch(e){
-            console.log(e)
+            // console.log(LoginReturn)
+        }catch(error){
+            console.log("Error in Login => ",error)
         }
     }
 
@@ -332,7 +326,7 @@ export default class Login extends Component {
             <div>
                 <div className="container-fluid register-cont1">
                     <div className="">
-                        <Navbar />
+                        <Navbar history={this.props.history} />
                         <div className="container register-cont1-text">
                             <h1 className="text-uppercase text-white text-center mb-4"><strong>User Login / Register</strong></h1>
                         </div>

@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import firebase from '../config/firebase';
+import { connect } from 'react-redux';
+import { orderNow } from '../config/firebase';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../App.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default class RestaurantDetails extends Component {
+class RestaurantDetails extends Component {
     constructor() {
         super()
         this.state = {
@@ -17,12 +20,15 @@ export default class RestaurantDetails extends Component {
             tab1Content: true,
             tab2Content: false,
             tab3Content: false,
+            cartItemsList: [],
+            totalPrice: 0,
+            showCartList: false,
         }
     }
 
     async componentDidMount() {
         const { state } = await this.props.location
-        // console.log("Did Mount => ", state)
+        this.fetchMenuItems()
         if (state) {
             this.setState({
                 resDetails: state,
@@ -33,10 +39,11 @@ export default class RestaurantDetails extends Component {
     }
 
     static getDerivedStateFromProps(props) {
-        // console.log("getDerivedStateFromProps => ", props.location.state)
         const { state } = props.location;
+        const { user } = props
         return {
-            resDetails: state
+            resDetails: state,
+            userDetails: user,
         }
     }
 
@@ -71,14 +78,118 @@ export default class RestaurantDetails extends Component {
         }
     }
 
+    fetchMenuItems() {
+        const { resDetails } = this.state;
+        firebase.firestore().collection('users').doc(resDetails.id).collection("menuItems").onSnapshot(snapshot => {
+            const menuItemsList = [];
+            snapshot.forEach(doc => {
+                const obj = { id: doc.id, ...doc.data() }
+                menuItemsList.push(obj)
+            })
+            this.setState({
+                menuItemsList: menuItemsList,
+            })
+        })
+    }
+
+    addToCart(item) {
+        const { cartItemsList, totalPrice } = this.state
+        if (item) {
+            cartItemsList.push(item);
+            this.setState({
+                totalPrice: totalPrice + Number(item.itemPrice),
+                cartItemsList: cartItemsList,
+                showCartList: true,
+            })
+        }
+    }
+
+    removeCartItem(itemIndex) {
+        const { cartItemsList, totalPrice } = this.state
+        const removedItemPrice = Number(cartItemsList[itemIndex].itemPrice)
+        cartItemsList.splice(itemIndex, 1);
+        this.setState({
+            totalPrice: totalPrice - removedItemPrice,
+            cartItemsList: cartItemsList,
+        })
+    }
+
+    async handleConfirmOrderBtn() {
+        const { cartItemsList, totalPrice, resDetails, userDetails } = this.state;
+        console.log(cartItemsList.length)
+        if(userDetails){
+            if(!userDetails.isRestaurant){
+                if(cartItemsList.length > 0){
+                    try {
+                        const orderNowReturn = await orderNow(cartItemsList, totalPrice, resDetails, userDetails)
+                        console.log(orderNowReturn)
+                        console.log("Successfully Ordered")
+                    } catch (error) {
+                        console.log(" Error in confirm order => ",error)
+                    }
+                }else{
+                    console.log("You have to select atleast one item")
+                }
+            }else{
+                console.log("You are not able to order")
+            }
+        }else{
+            console.log("You must be Loged In")
+        }
+    }
+
+    _renderMenuItemsList() {
+        const { menuItemsList } = this.state;
+        if (menuItemsList) {
+            return Object.keys(menuItemsList).map((val) => {
+                return (
+                    <div className="container border-bottom pb-2 px-lg-0 px-md-0 mb-4" key={menuItemsList[val].id}>
+                        <div className="row">
+                            <div className="col-lg-2 col-md-3 col-8 offset-2 offset-lg-0 offset-md-0 px-0 mb-3 text-center">
+                                <img style={{ width: "70px", height: "70px" }} alt="Natural Healthy Food" src={menuItemsList[val].itemImageUrl} />
+                            </div>
+                            <div className="col-lg-7 col-md-6 col-sm-12 px-0">
+                                <h6 className="">{menuItemsList[val].itemTitle}</h6>
+                                <p className=""><small>{menuItemsList[val].itemIngredients}</small></p>
+                            </div>
+                            <div className="col-lg-3 col-md-3 col-sm-12 px-0 text-center">
+                                <span className="mx-3">RS.{menuItemsList[val].itemPrice}</span>
+                                <span className="menuItemsListAddBtn" onClick={() => this.addToCart(menuItemsList[val])} ><FontAwesomeIcon icon="plus" className="text-warning" /></span>
+                            </div>
+                        </div>
+                    </div>
+                )
+            })
+        }
+    }
+
+    _renderCartItemsList() {
+        const { cartItemsList } = this.state
+        if (cartItemsList) {
+            return Object.keys(cartItemsList).map((val) => {
+                return (
+                    <li className="food-item border-bottom pb-2 mb-3" key={val}>
+                        <div className="row">
+                            <div className="col-8 pr-0">
+                                <p className="mb-0">{cartItemsList[val].itemTitle}</p>
+                            </div>
+                            <div className="col-4 pl-0 text-right">
+                                <p className="mb-0"><span className="food-price">RS.{cartItemsList[val].itemPrice}</span><span onClick={() => this.removeCartItem(val)} className="remove-food-item"><FontAwesomeIcon icon="times" /></span></p>
+                            </div>
+                        </div>
+                    </li>
+                )
+            })
+        }
+    }
+
     render() {
-        const { tab1, tab2, tab3, tab1Content, tab2Content, tab3Content, resDetails } = this.state;
-        // console.log("RENDER => ", resDetails)
+        const { tab1, tab2, tab3, tab1Content, tab2Content, tab3Content, resDetails, totalPrice, cartItemsList, showCartList } = this.state;
         return (
             <div>
                 <div className="container-fluid res-details-cont1">
                     <div className="">
-                        <Navbar />
+                        <Navbar history={this.props.history} />
                         <div className="container px-0 res-details-cont1-text mx-0">
                             <div className="container">
                                 <div className="row">
@@ -156,21 +267,7 @@ export default class RestaurantDetails extends Component {
                                                 </div>
                                                 <div>
                                                     <h6 className="mb-4 text-warning">Best food items:</h6>
-                                                    <div className="container border-bottom pb-2 px-lg-0 px-md-0 mb-4">
-                                                        <div className="row">
-                                                            <div className="col-lg-2 col-md-3 col-8 offset-2 offset-lg-0 offset-md-0 px-0 mb-3 text-center">
-                                                                <img style={{ width: "85%" }} alt="Natural Healthy Food" src={require("../assets/images/listing-logo03.png")} />
-                                                            </div>
-                                                            <div className="col-lg-7 col-md-6 col-sm-12 px-0">
-                                                                <h6 className="">Chicken Tandoori Special 12" Deep Pan</h6>
-                                                                <p className=""><small>Cheese, tomatoes and italian herbs.</small></p>
-                                                            </div>
-                                                            <div className="col-lg-3 col-md-3 col-sm-12 px-0 text-center">
-                                                                <span className="mx-3">RS.500</span>
-                                                                <span style={{ display: 'inline-block', textAlign: 'center', fontSize: "12px", borderRadius: '80px', border: '1px solid #eb6825', padding: '4px 8px 4px 8px', margin: "0px 16px" }} ><FontAwesomeIcon icon="plus" className="text-warning" /></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    {this._renderMenuItemsList()}
                                                 </div>
                                             </div>
                                         </div>
@@ -203,32 +300,25 @@ export default class RestaurantDetails extends Component {
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-12">
                                 <div className="container bg-white py-3 order-card">
-                                    <h6 className="border-bottom pb-2"><FontAwesomeIcon icon="shopping-basket" className="mr-2" />Your Order</h6>
-                                    <div>
-                                        <ul>
-                                            <li className="food-item border-bottom pb-2 mb-3">
-                                                <div className="row">
-                                                    <div className="col-8 pr-0">
-                                                        <p className="mb-0">Chicken Tandoori Special 12" Deep Pan</p>
-                                                    </div>
-                                                    <div className="col-4 pl-0 text-right">
-                                                        <p className="mb-0"><span className="food-price">RS.500</span><span className="remove-food-item"><FontAwesomeIcon icon="times" /></span></p>
-                                                    </div>
+                                    <h6 className="border-bottom pb-2 mb-3"><FontAwesomeIcon icon="shopping-basket" className="mr-2" />Your Order</h6>
+                                    {cartItemsList.length > 0 ? <div>
+                                        <div>
+                                            <ul>
+                                                {this._renderCartItemsList()}
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <div className="row ">
+                                                <div className="col-12">
+                                                    <p style={{ backgroundColor: '#f1f3f8', padding: '10px 15px' }}>Total+ <span style={{ float: 'right', color: '#2f313a', fontSize: '14px', fontWeight: 700 }}><em>RS.{totalPrice}</em></span></p>
                                                 </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <div className="row ">
-                                            <div className="col-12">
-                                                <p style={{ backgroundColor: '#f1f3f8', padding: '10px 15px' }}>Total+ <span style={{ float: 'right', color: '#2f313a', fontSize: '14px', fontWeight: 700 }}><em>RS.500</em></span></p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> : <p className="text-success">There are no items in your basket.</p>}
                                     <div>
                                         <div className="row ">
                                             <div className="col-12">
-                                                <button type="button" className="btn btn-warning btn-sm btn-block text-uppercase mr-2 mr-1 px-3"><b>Confirm Order</b></button>
+                                                <button onClick={() => this.handleConfirmOrderBtn()} type="button" className="btn btn-warning btn-sm btn-block text-uppercase mr-2 mr-1 px-3"><b>Confirm Order</b></button>
                                             </div>
                                         </div>
                                     </div>
@@ -242,3 +332,11 @@ export default class RestaurantDetails extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    }
+}
+
+export default connect(mapStateToProps, null)(RestaurantDetails);
