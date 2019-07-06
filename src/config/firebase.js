@@ -147,7 +147,7 @@ function addItem(itemDetails) {
     })
 }
 
-function orderNow(cartItemsList, totalPrice, resDetails, userDetails) {
+function orderNow(cartItemsList, totalPrice, resDetails, userDetails, history) {
     return new Promise((resolve, reject) => {
         let user = firebase.auth().currentUser;
         var uid;
@@ -175,8 +175,8 @@ function orderNow(cartItemsList, totalPrice, resDetails, userDetails) {
             console.log(docRef.id)
             db.collection("users").doc(resDetails.id).collection("orderRequest").doc(docRef.id).set(orderRequest).then((docRef) => {
                 // console.log("Document written with ID: ", docRef.id);
-                // itemDetails.propsHistory.push("/");
-                // resolve(docRef.id)
+                history.push("/my-orders");
+                resolve(docRef.id)
             }).catch(function (error) {
                 console.error("Error adding document: ", error);
                 reject(error)

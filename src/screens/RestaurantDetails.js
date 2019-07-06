@@ -121,7 +121,8 @@ class RestaurantDetails extends Component {
             if(!userDetails.isRestaurant){
                 if(cartItemsList.length > 0){
                     try {
-                        const orderNowReturn = await orderNow(cartItemsList, totalPrice, resDetails, userDetails)
+                        const history = this.props.history;
+                        const orderNowReturn = await orderNow(cartItemsList, totalPrice, resDetails, userDetails, history)
                         console.log(orderNowReturn)
                         console.log("Successfully Ordered")
                     } catch (error) {
