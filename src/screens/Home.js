@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
+import Navbar2 from '../components/Navbar2';
 import Footer from '../components/Footer';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -33,7 +34,8 @@ class Home extends Component {
         {/* Home Navbar Section */}
         <div className="container-fluid home-cont1">
           <div className="">
-            <Navbar history={this.props.history} />
+            {/* <Navbar history={this.props.history} /> */}
+            <Navbar2 history={this.props.history} />
             <div className="container home-cont1-text">
               <h1 className="h1 text-uppercase text-white text-center mb-4"><strong>Organic Fast Food Made <br /> Easy And Healthy</strong></h1>
               <div className="container">

@@ -132,6 +132,7 @@ a:hover{
   color: #fff;
   background-color: #eb6825;
   border-color: #eb6825;
+  transition: all 0.3s ease-in-out !important
 }
 
 .btn-warning:hover {

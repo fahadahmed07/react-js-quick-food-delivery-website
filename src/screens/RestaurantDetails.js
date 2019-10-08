@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
+import Navbar2 from '../components/Navbar2';
 import Footer from '../components/Footer';
 import firebase from '../config/firebase';
 import { connect } from 'react-redux';
 import { orderNow } from '../config/firebase';
+import Swal from 'sweetalert2'
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../App.css'
@@ -117,25 +119,54 @@ class RestaurantDetails extends Component {
     async handleConfirmOrderBtn() {
         const { cartItemsList, totalPrice, resDetails, userDetails } = this.state;
         console.log(cartItemsList.length)
-        if(userDetails){
-            if(!userDetails.isRestaurant){
-                if(cartItemsList.length > 0){
+        if (userDetails) {
+            if (!userDetails.isRestaurant) {
+                if (cartItemsList.length > 0) {
                     try {
                         const history = this.props.history;
                         const orderNowReturn = await orderNow(cartItemsList, totalPrice, resDetails, userDetails, history)
                         console.log(orderNowReturn)
-                        console.log("Successfully Ordered")
+                        // console.log("Successfully Ordered")
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Successfully Ordered',
+                            type: 'success',
+                        }).then(() => {
+                            history.push("/my-orders");
+                        })
                     } catch (error) {
-                        console.log(" Error in confirm order => ",error)
+                        // console.log(" Error in confirm order => ", error)
+                        Swal.fire({
+                            title: 'Error',
+                            text: error,
+                            type: 'error',
+                        })
                     }
-                }else{
+                } else {
                     console.log("You have to select atleast one item")
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'You have to select atleast one item',
+                        type: 'error',
+                    })
                 }
-            }else{
-                console.log("You are not able to order")
+            } else {
+                // console.log("You are not able to order")
+                Swal.fire({
+                    title: 'Error',
+                    text: 'You are not able to order',
+                    type: 'error',
+                })
             }
-        }else{
-            console.log("You must be Loged In")
+        } else {
+            // console.log("You must be Loged In")
+            Swal.fire({
+                title: 'Error',
+                text: 'You must be Loged In',
+                type: 'error',
+            }).then(() => {
+                this.props.history.push('/login')
+            })
         }
     }
 
@@ -190,7 +221,8 @@ class RestaurantDetails extends Component {
             <div>
                 <div className="container-fluid res-details-cont1">
                     <div className="">
-                        <Navbar history={this.props.history} />
+                        {/* <Navbar history={this.props.history} /> */}
+                        <Navbar2 history={this.props.history} />
                         <div className="container px-0 res-details-cont1-text mx-0">
                             <div className="container">
                                 <div className="row">

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
+import Navbar2 from '../components/Navbar2';
 import Footer from '../components/Footer';
 import { addItem } from '../config/firebase';
-
+import Swal from 'sweetalert2'
 
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -80,8 +81,20 @@ export default class AddMenuItems extends Component {
             try {
                 const addItemReturn = await addItem(itemDetails)
                 // console.log(addItemReturn)
+                Swal.fire({
+                    title: 'Success',
+                    text: addItemReturn,
+                    type: 'success',
+                }).then(() => {
+                    this.props.history.push('/my-foods')
+                })
             } catch (error) {
-                console.log("Error in add menu items => ", error)
+                // console.log("Error in add menu items => ", error)
+                Swal.fire({
+                    title: 'Error',
+                    text: error,
+                    type: 'error',
+                })
             }
         }
     }
@@ -92,7 +105,8 @@ export default class AddMenuItems extends Component {
             <div>
                 <div className="container-fluid register-cont1">
                     <div className="">
-                        <Navbar history={this.props.history} />
+                        {/* <Navbar history={this.props.history} /> */}
+                        <Navbar2 history={this.props.history} />
                         <div className="container register-cont1-text">
                             <h1 className="text-uppercase text-white text-center mb-4"><strong>Add Your Best Food Items</strong></h1>
                         </div>

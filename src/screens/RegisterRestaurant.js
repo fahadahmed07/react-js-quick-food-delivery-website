@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
+import Navbar2 from '../components/Navbar2';
 import Footer from '../components/Footer';
 import { signUp } from '../config/firebase';
 
@@ -299,7 +300,8 @@ export default class RegisterRestaurant extends Component {
             <div>
                 <div className="container-fluid register-cont1">
                     <div className="">
-                        <Navbar history={this.props.history} />
+                        {/* <Navbar history={this.props.history} /> */}
+                        <Navbar2 history={this.props.history} />
                         <div className="container register-cont1-text">
                             <h1 className="text-uppercase text-white text-center mb-4"><strong>Register User And Add Restaurant</strong></h1>
                         </div>

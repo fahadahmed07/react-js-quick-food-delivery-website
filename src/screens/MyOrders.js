@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
+import Navbar2 from '../components/Navbar2';
 import Footer from '../components/Footer';
 // import firebase from '../config/firebase';
 import { connect } from 'react-redux';
@@ -227,7 +228,8 @@ class MyOrders extends Component {
             <div>
                 <div className="container-fluid res-details-cont1">
                     <div className="">
-                        <Navbar history={this.props.history} />
+                        {/* <Navbar history={this.props.history} /> */}
+                        <Navbar2 history={this.props.history} />
                         <div className="container px-0 res-details-cont1-text mx-0">
                             <div className="container">
                                 {

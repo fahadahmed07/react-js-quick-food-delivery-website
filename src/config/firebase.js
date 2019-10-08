@@ -123,11 +123,13 @@ function addItem(itemDetails) {
                 }
                 db.collection("users").doc(uid).collection("menuItems").add(itemDetailsForDb).then((docRef) => {
                     // console.log("Document written with ID: ", docRef.id);
-                    itemDetails.propsHistory.push("/my-foods");
-                    resolve(docRef.id)
+                    // itemDetails.propsHistory.push("/my-foods");
+                    resolve("Successfully added food item")
                 }).catch(function (error) {
-                    console.error("Error adding document: ", error);
-                    reject(error)
+                    let errorCode = error.code;
+                    let errorMessage = error.message;
+                    reject(errorMessage)
+                    // console.error("Error adding document: ", error);
                 })
             }).catch((error) => {
                 // Handle Errors here.
@@ -169,21 +171,21 @@ function orderNow(cartItemsList, totalPrice, resDetails, userDetails, history) {
             ...userDetails,
         }
 
-        console.log("myOrder => ", myOrder)
-        console.log("orderRequest => ", orderRequest)
+        // console.log("myOrder => ", myOrder)
+        // console.log("orderRequest => ", orderRequest)
         db.collection("users").doc(uid).collection("myOrder").add(myOrder).then((docRef) => {
-            console.log(docRef.id)
+            // console.log(docRef.id)
             db.collection("users").doc(resDetails.id).collection("orderRequest").doc(docRef.id).set(orderRequest).then((docRef) => {
                 // console.log("Document written with ID: ", docRef.id);
-                history.push("/my-orders");
-                resolve(docRef.id)
+                resolve('Successfully ordered')
+                // history.push("/my-orders");
             }).catch(function (error) {
-                console.error("Error adding document: ", error);
-                reject(error)
+                console.error("Error adding document: ", error.message);
+                reject(error.message)
             })
         }).catch(function (error) {
-            console.error("Error adding document: ", error);
-            reject(error)
+            console.error("Error adding document: ", error.message);
+            reject(error.message)
         })
     })
 }

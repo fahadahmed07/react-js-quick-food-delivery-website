@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
+import Navbar2 from '../components/Navbar2';
 import Footer from '../components/Footer';
 import { connect } from 'react-redux';
 import { restaurant_list } from '../store/action';
@@ -134,8 +135,8 @@ class Restaurants extends Component {
                                 <p className=""><small>Type of Foods: <span>{restaurantList[val].typeOfFood.join(', ')}</span></small></p>
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-12 py-4 px-0">
-                                <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '4px 7px 4px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
-                                <button type="button" onClick={() => this.handleViewMenuBtn(restaurantList[val])} className="btn btn-warning btn-sm text-uppercase">View Menu</button>
+                                <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '6px 7px 0px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
+                                <button type="button" onClick={() => this.handleViewMenuBtn(restaurantList[val])} className="btn btn-warning btn-sm text-uppercase" style={{ marginBottom: '8px' }}>View Menu</button>
                             </div>
                         </div>
                     </div>
@@ -174,8 +175,8 @@ class Restaurants extends Component {
                                             <p className=""><small>Type of Foods: <span>{restaurantList[val].typeOfFood.join(', ')}</span></small></p>
                                         </div>
                                         <div className="col-lg-3 col-md-3 col-sm-12 py-4 px-0">
-                                            <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '4px 7px 4px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
-                                            <button type="button" onClick={() => this.handleViewMenuBtn(restaurantList[val])} className="btn btn-warning btn-sm text-uppercase">View Menu</button>
+                                            <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '6px 7px 0px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
+                                            <button type="button" onClick={() => this.handleViewMenuBtn(restaurantList[val])} className="btn btn-warning btn-sm text-uppercase" style={{ marginBottom: '8px' }}>View Menu</button>
                                         </div>
                                     </div>
                                 </div>
@@ -212,8 +213,8 @@ class Restaurants extends Component {
                                 <p className=""><small>Type of Foods: <span>{searchRestaurants[val].typeOfFood.join(', ')}</span></small></p>
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-12 py-4 px-0">
-                                <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '4px 7px 4px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
-                                <button type="button" onClick={() => this.handleViewMenuBtn(searchRestaurants[val])} className="btn btn-warning btn-sm text-uppercase">View Menu</button>
+                                <span style={{ display: 'inline-block', textAlign: 'center', borderRadius: '3px', border: '1px solid #dddddd', padding: '6px 7px 0px 7px', marginRight: '16px' }} ><FontAwesomeIcon icon="heart" className="text-success" /></span>
+                                <button type="button" onClick={() => this.handleViewMenuBtn(searchRestaurants[val])} className="btn btn-warning btn-sm text-uppercase" style={{ marginBottom: '8px' }}>View Menu</button>
                             </div>
                         </div>
                     </div>
@@ -228,7 +229,8 @@ class Restaurants extends Component {
             <div>
                 <div className="container-fluid restaurants-cont1">
                     <div className="">
-                        <Navbar history={this.props.history} />
+                        {/* <Navbar history={this.props.history} /> */}
+                        <Navbar2 history={this.props.history} />
                         <div className="container px-0 restaurants-cont1-text">
                             <div className="container">
                                 <div className="row justify-content-center">
